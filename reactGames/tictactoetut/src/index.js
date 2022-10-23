@@ -32,10 +32,21 @@ class Board extends React.Component {
       xIsNext: true,
     };
   }
+  // This is not working currently because we cannot setState in board but why?
+  resetBoard(){
+    this.setState({
+      squares: Array(9).fill(null),
+      xIsNext: true,
+    })
+  }
 
   handleClick(i){
-    /* slice(start=0, end=len(arr)) gives a subset of an array*/
+    // Ignore click if field is already filled or winner is found
     const squares = this.state.squares.slice();
+    if (calculateWinner(squares) || squares[i]) {
+      return;
+    }
+    /* slice(start=0, end=len(arr)) gives a subset of an array*/
     // Shorthand if-else syntax
     squares[i] = this.state.xIsNext ? 'X' : 'O';
     this.setState({
@@ -53,9 +64,18 @@ class Board extends React.Component {
   }
 
   render() {
-    const status = 'Next player: '  + 
-    (this.state.xIsNext ? 'X' : 'O');
-
+    const winner = calculateWinner(this.state.squares);
+    let status;
+    if (winner){
+      status = 'Winner: ' + winner;
+    } else {
+      status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+    }
+    /* 
+            <!-- <div>
+          <button onClick={this.resetBoard()}>Restart</button>
+        </div> -->
+        */
     return (
       <div>
         <div className="status">{status}</div>
@@ -89,6 +109,16 @@ We have not defined the handleClick() method yet, so our code crashes. If you cl
 */
 
 class Game extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      history: [{
+      squares: Array(9).fill(null),
+    }],
+    xIsNext: true,
+  };
+  
+  }
   render() {
     return (
       <div className="game">
