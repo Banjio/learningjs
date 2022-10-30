@@ -1,8 +1,8 @@
 const button = document.querySelector('#clickoUno')!;
 
-button.addEventListener('click', () => {
-    console.log("Clicked!");
-});
+// button.addEventListener('click', () => {
+//     console.log("Clicked!");
+// });
 
 function clickHandler(message: string){
     console.log(`Clicked ${message}`)

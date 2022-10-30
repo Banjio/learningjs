@@ -1,8 +1,5 @@
 "use strict";
 const button = document.querySelector('#clickoUno');
-button.addEventListener('click', () => {
-    console.log("Clicked!");
-});
 function clickHandler(message) {
     console.log(`Clicked ${message}`);
 }
