@@ -20,6 +20,8 @@ type Combinable = number | string;
 type Numeric = number | boolean;
 type Universal = Combinable & Numeric;
 
+function add(a: number, b: number): number
+function add(a: string, b: string): string
 function add(a: Combinable, b: Combinable){
     // This is called a type guard
     if(typeof a === 'string' || typeof b === 'string'){
@@ -28,6 +30,9 @@ function add(a: Combinable, b: Combinable){
 
     return a + b;
 }
+
+const result = add('Max', ' Beier');
+result.split('')
 
 type UnknownEmployee = Employee | Admin;
 
@@ -114,5 +119,27 @@ const userInputElement = document.getElementById('user-input')! as HTMLInputElem
 userInputElement.value = 'Hi there';
 
 interface ErrorContainer {
-
+    [prop: string]: string;
 }
+
+const errorBag: ErrorContainer = {
+    email: 'Not a valid email!',
+    uName: 'Must start with a capital character!'
+}
+
+const fetchedUserData = {
+    id: 'u1',
+    name: 'Max',
+    job: {title: 'CEO', description: 'My own company'}
+}
+
+// This would be the vanilla js way
+//console.log(fetchedUserData.job && fetchedUserData.job.title)
+
+console.log(fetchedUserData?.job?.title);
+
+const userInput = null;
+// This would however tread '' as fale
+//const storedData = userInput || 'DEFAULT';
+const storedData = userInput ?? 'DEFAULT';
+console.log(storedData)
